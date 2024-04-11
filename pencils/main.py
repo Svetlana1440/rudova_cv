@@ -5,7 +5,7 @@ pencils = 0
 for i in range(1, 13):
     current_pencils = 0
     image = cv2.imread(f"images/img ({i}).jpg",  cv2.IMREAD_GRAYSCALE) 
-    thresh = cv2.threshold(image, 120, 255,cv2.THRESH_BINARY)[1], cv2.erode(thresh, None, iterations = 40), cv2.bitwise_not(thresh)
+    thresh = cv2.bitwise_not(cv2.erode(cv2.threshold(image, 120, 255,cv2.THRESH_BINARY)[1], None, iterations = 40))
     mask = np.zeros(thresh.shape, dtype="uint8")
     out = cv2.connectedComponentsWithStats(thresh, 4, cv2.CV_32S)
     (numLabels, labels, stats, centroids) = out
