@@ -22,7 +22,7 @@ for i in range(1, volume_labels):
             else:
                     colors_rect[key] += 1     
         else:
-            if key not in colors_circle .keys():
+            if key not in colors_circle.keys():
                     colors_circle [key] = 1
             else:
                     colors_circle [key] += 1
