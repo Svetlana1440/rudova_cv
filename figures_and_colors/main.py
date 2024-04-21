@@ -14,7 +14,7 @@ for i in range(1, volume_labels):
         x, y, w, h = data[i, cv2.CC_STAT_LEFT], data[i, cv2.CC_STAT_TOP], data[i, cv2.CC_STAT_WIDTH], data[i, cv2.CC_STAT_HEIGHT]
         area = data[i, cv2.CC_STAT_AREA]
         (cX, cY) = centroids[i]
-        low = image[y:y+h, x:x+w]          
+        low = image_hsv[y:y+h, x:x+w]          
         key = low[h//2, w//2, 0]
         if(area == w*h):
             if key not in colors_rect.keys():
