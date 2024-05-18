@@ -3,18 +3,27 @@ import sys
 import cv2
 import numpy as np
 import math
+
 pygame.init()
 
-img = cv2.imread("13_hak/doski.jpg")
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-imghsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+camera = cv2.VideoCapture(1 + cv2.CAP_DSHOW) 
+cv2.namedWindow("Image", cv2.WINDOW_GUI_NORMAL)
 
-_, thresh = cv2.threshold(imghsv[:, :, 1], 65, 255, cv2.THRESH_BINARY)
-thresh = cv2.erode(thresh, None, iterations=1)
-thresh = cv2.dilate(thresh, None, iterations=10)
-thresh = cv2.erode(thresh, None, iterations=0)
-cnts, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+roi = None
 
+while True:
+    ret, img = camera.read()
+        
+    # Загрузка изображения доски с помощью OpenCV
+    # img = cv2.imread("main/scr.jpg)
+    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imghsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    _, thresh = cv2.threshold(imghsv[:, :, 1], 65, 255, cv2.THRESH_BINARY)
+    thresh = cv2.erode(thresh, None, iterations=1)
+    thresh = cv2.dilate(thresh, None, iterations=10)
+    thresh = cv2.erode(thresh, None, iterations=0)
+    cnts, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
 mask = np.zeros_like(thresh)
 for cnt in cnts:
