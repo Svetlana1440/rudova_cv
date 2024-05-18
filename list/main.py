@@ -77,5 +77,6 @@ while camera.isOpened():
         break
     cv2.imshow("Image", image)
     cv2.imshow("Mask", mask)
+    
 camera.release()
 cv2.destroyAllWindows()
