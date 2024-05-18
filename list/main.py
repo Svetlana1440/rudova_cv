@@ -58,17 +58,17 @@ while camera.isOpened():
     for p in range(len(approx)):
         cv2.circle(image, tuple(*approx[p]), 4, (0, 255, 0), 2*p)
     approx = approx.astype(np.float32)
-    pts_fg = np.float32( [ [image.shape[1], 0], [0,0], [0, image.shape[0]],[image.shape[1], image.shape[0]]] )
-    M = cv2.getPerspectiveTransform(approx, pts_fg)
+    points_figures = np.float32( [ [image.shape[1], 0], [0,0], [0, image.shape[0]],[image.shape[1], image.shape[0]]] )
+    M = cv2.getPerspectiveTransform(approx, points_figures)
     aff_figures = cv2.warpPerspective(image, M, (image.shape[1], image.shape[0]))
     pos = np.where(aff_figures > 0)
     temp = np.zeros_like(image)
     temp[pos] = aff_figures[pos]
 
-    cv2.putText(temp, "HUTAO", (60, 60), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 255, 0), 3)
-    cv2.putText(temp, "THE BEST", (60, 120), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 255, 255), 3)
+    cv2.putText(temp, "text", (60, 60), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 255, 0), 3)
+    cv2.putText(temp, "TEXT", (60, 120), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 255, 255), 3)
 
-    M = cv2.getPerspectiveTransform(pts_fg, approx)
+    M = cv2.getPerspectiveTransform(points_figures, approx)
     aff_figures = cv2.warpPerspective(temp, M, (image.shape[1], image.shape[0]))
     pos = np.where(aff_figures > 0)
     image[pos] = aff_figures[pos]
